@@ -1,0 +1,142 @@
+nav {
+	margin-bottom: 16px;
+}
+
+nav .fa-car {
+	padding-right: 8px;
+}
+
+.jumbotron {
+	padding: 20px;
+}
+
+.signin {
+	max-width: 320px;
+	margin: 0 auto;
+}
+
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+
+.form-signin .checkbox {
+  font-weight: normal;
+}
+
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-top: 0;
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.form-signup-header {
+  margin-bottom: 10px;
+}
+
+.form-inline-2 input[type="date"] {
+  padding: 0 8px;
+  height: 38px;
+}
+
+.form-reserve .breadcrumb {
+  background-color: #f7f7f9;
+}
+
+.form-reserve .breadcrumb-item+.breadcrumb-item::before {
+  content: ">";
+}
+
+.card {
+  margin-bottom: 1rem;
+}
+
+.card:last-child {
+  margin-bottom: 0;
+}
+
+.card-block .form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-signup div input:first-child {
+  margin-bottom: 0;
+}
+
+.form-signup div input {
+  margin-top: 5px;
+}
+
+.form-inline-2 .form-control {
+  width: 50% !important;
+}
+
+.col-form-label {
+  padding-top: 11px;
+}
+
+.form-control {
+  padding: 0.5rem 0.5rem;
+}
+
+.admin-content {
+  background-color: #ffffff;
+  border-left: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  padding: 20px;
+}
+
+.admin-buttons,
+.user-buttons {
+  margin-bottom: 20px;
+}
+
+.user-content {
+  border: 1px solid #ddd;
+  background-color: #ffffff;
+  padding: 20px;
+}
+
+.jumbotron .row {
+  margin-bottom: 20px;
+}
+
+.jumbotron .row:last-child {
+  margin-bottom: 0;
+}
+
+.span-row {
+  text-align: center;
+  font-weight: bold;
+}
+
+.table:last-child {
+  margin-bottom: 0;
+}
+
+.invoice {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  padding: 20px;
+}

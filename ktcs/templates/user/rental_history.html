@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Rental History{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="jumbotron">
+			<div class="user-nav">
+	        	<h2 class="form-settings-header">Rental History</h2>
+			</div>
+			<div class="user-content">
+				<div class="row">
+					<div class="col-md-12">
+						<h4>Rentals</h4>
+						<table class="table table-hover table-bordered user-content">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Car</th>
+									<th>Location</th>
+									<th>Pick-up</th>
+									<th>Drop-off</th>
+									<th>Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% if past_rentals | length == 0 %}
+								<tr>
+									<td scope="row" colspan="5" class="span-row">No results.</td>
+								</tr>
+								{% else %}
+								{% for rental in past_rentals %}
+								<tr>
+									<td scope="row">{{ rental.id }}</td>
+									<td>{{ rental.car.year }} {{ rental.car.make }} {{ rental.car.model }}</td>
+									<td>{{ rental.location.address }}, {{ rental.location.city }}, {{ rental.location.province }}</td>
+									<td>{{ rental.pickup }}</td>
+									<td>{{ rental.dropoff }}</td>
+									<td>
+										{% if dropped_off(rental) %}
+										<a class="btn btn-sm btn-secondary" href="{{ url_for('comments_new') }}">Comment</a>
+										{% else %}
+										Expired
+										{% endif %}
+									</td>
+								</tr>
+								{% endfor %}
+								{% endif %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

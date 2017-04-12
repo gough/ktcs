@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% from "_helpers.html" import render_field %}
+{% block title %}Edit Car{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="jumbotron">
+			<div class="form-settings">
+	        	<h2 class="form-settings-header">Edit Car</h2>
+				<form method="post">
+					{{ form.csrf_token }}
+		        	<div class="card">
+						<div class="card-header" role="tab" id="headingOne">
+							<h5 class="mb-0">Car Information</h5>
+						</div>
+						<div class="card-block">
+							<div class="form-group row">
+								<div class="col-sm-2 col-form-label">ID</div>
+								<div class="col-sm-10">
+									<input class="form-control" type="text" value="{{ car.id }}" disabled>
+								</div>
+							</div>
+							{{ render_field(form.make, class='form-control') }}
+							{{ render_field(form.model, class='form-control') }}
+							{{ render_field(form.year, class='form-control') }}
+							{{ render_field(form.vin, class='form-control') }}
+							{{ render_field(form.location_id, class='form-control') }}
+							{{ render_field(form.rate, class='form-control') }}
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-block">
+							<div class="form-group row">
+								<div class="offset-sm-2 col-sm-10">
+									<input type="submit" value="Update" class="btn btn-primary">
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

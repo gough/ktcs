@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% from "_helpers.html" import render_field %}
+{% block title %}Delete Reservation{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="jumbotron">
+			<div class="form-settings">
+	        	<h2 class="form-settings-header">Delete Reservation</h2>
+				<form method="post">
+					{{ form.csrf_token }}
+		        	<div class="card">
+						<div class="card-header" role="tab" id="headingOne">
+							<h5 class="mb-0">Confirm Delete</h5>
+						</div>
+						<div class="card-block">
+							{{ render_field(form.confirm, class='form-check-input') }}
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-block">
+							<div class="form-group row">
+								<div class="offset-sm-2 col-sm-10">
+									<input type="submit" value="Delete" class="btn btn-danger">
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

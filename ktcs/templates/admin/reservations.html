@@ -1,0 +1,49 @@
+{% extends "admin/base.html" %}
+{% block title %}Reservations{% endblock %}
+{% block admin_content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="row admin-buttons">
+			<div class="col-md-12">
+				<a class="btn btn-primary" href="{{ url_for('admin_reservations_new') }}">Add Reservation</a>
+			</div>
+		</div>
+		<table class="table table-hover table-bordered table-sm">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>User</th>
+					<th>Car</th>
+					<th>Location</th>
+					<th>Pick-up</th>
+					<th>Drop-off</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% if rentals | length == 0 %}
+				<tr>
+					<td scope="row" colspan="5" class="span-row">No results.</td>
+				</tr>
+				{% else %}
+				{% for rental in rentals %}
+				<tr>
+					<td scope="row">{{ rental.id }}</td>
+					<td>{{ rental.user.first_name }} {{ rental.user.last_name }}</td>
+					<td><a href="{{ url_for('admin_reservations_bycar', id=rental.car.id) }}">{{ rental.car.year }} {{ rental.car.make }} {{ rental.car.model }}</a></td>
+					<td>{{ rental.location.address }}</td>
+					{% set pickup_date = rental.pickup.strftime('%Y-%m-%d') %}
+					{% set pickup_time = rental.pickup.strftime('%H:%M:%S') %}
+					<td><a href="{{ url_for('admin_reservations_bydate', date=pickup_date) }}">{{ pickup_date }}</a> {{ pickup_time }}</td>
+					{% set dropoff_date = rental.dropoff.strftime('%Y-%m-%d') %}
+					{% set dropoff_time = rental.dropoff.strftime('%H:%M:%S') %}
+					<td><a href="{{ url_for('admin_reservations_bydate', date=dropoff_date) }}">{{ dropoff_date }}</a> {{ dropoff_time }}</td>
+					<td><a class="btn btn-sm btn-primary" href="{{ url_for('admin_reservations_edit', id=rental.id) }}">Edit</a> <a class="btn btn-sm btn-danger" href="{{ url_for('admin_reservations_delete', id=rental.id) }}">Delete</a></td>
+				</tr>
+				{% endfor %}
+				{% endif %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

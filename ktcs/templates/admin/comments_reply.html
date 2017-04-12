@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% from "_helpers.html" import render_field %}
+{% block title %}Reply{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="jumbotron">
+			<div class="form-settings">
+	        	<h2 class="form-settings-header">Reply</h2>
+	        	<div class="card">
+					<div class="card-header" role="tab" id="headingOne">
+						<h5 class="mb-0">Comment Information</h5>
+					</div>
+					<div class="card-block">
+						<div class="form-group row">
+							<div class="col-sm-2 col-form-label">Car</div>
+							<div class="col-sm-10">
+								<input class="form-control" type="text" value="{{ comment.rental.car.year }} {{ comment.rental.car.make }} {{ comment.rental.car.model }}" disabled>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-2 col-form-label">User</div>
+							<div class="col-sm-10">
+								<input class="form-control" type="text" value="{{ comment.user.first_name }} {{ comment.user.last_name }}" disabled>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-2 col-form-label">Comment</div>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="10" data-role="none" disabled>{{ comment.text }}</textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+				<form method="post">
+					{{ form.csrf_token }}
+		        	<div class="card">
+						<div class="card-header" role="tab" id="headingOne">
+							<h5 class="mb-0">Reply</h5>
+						</div>
+						<div class="card-block">
+							{{ render_field(form.text, rows=10, class='form-control') }}
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-block">
+							<div class="form-group row">
+								<div class="offset-sm-2 col-sm-10">
+									<input type="submit" value="Reply" class="btn btn-primary">
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

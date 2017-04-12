@@ -1,0 +1,49 @@
+{% extends "admin/base.html" %}
+{% block title %}Comments{% endblock %}
+{% block admin_content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="row">
+			<div class="col-md-12">
+				<h4>Recent Comments</h4>
+				<table class="table table-bordered">
+					<tbody>
+						{% if comments | length == 0 %}
+						<tr>
+							<td scope="row" colspan="5" class="span-row">No results.</td>
+						</tr>
+						{% else %}
+						{% for comment in comments %}
+						<tr style="margin-top: 20px">
+							<td><strong>ID:</td>
+							<td>{{ comment.id }}</td>
+							<td><strong>Car:</strong></td>
+							<td scope="row">{{ comment.rental.car.year }} {{ comment.rental.car.make }} {{ comment.rental.car.model }}</td>
+							<td><strong>User:</strong></td>
+							<td>{{ comment.user.first_name }} {{ comment.user.last_name }}</td>
+							<td><strong>Rating:</strong></td>
+							<td>{{ comment.rating }}</td>
+						</tr>
+						<tr>
+							<td><strong>Title:</strong></td>
+							<td scope="row" colspan="7">{{ comment.title }}</strong></td>
+						</tr>
+						<tr>
+							<td><strong>Comment:</strong></td>
+							<td scope="row" colspan="7">{{ comment.text | truncate(350) }}</td>
+						</tr>
+						<tr>
+							<td scope="row" colspan="7">
+								<a class="btn btn-sm btn-info" href="{{ url_for('admin_comments_reply', id=comment.id) }}">Reply</a> <a class="btn btn-sm btn-danger" href="{{ url_for('admin_comments_delete', id=comment.id) }}">Delete</a>
+							</td>
+						</tr>
+						<tr><td style="visibility: hidden" colspan="8"></td></tr>
+						{% endfor %}
+						{% endif %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "admin/base.html" %}
+{% block title %}Administration{% endblock %}
+{% block admin_content %}
+<div class="row">
+	<div class="col-md-12">
+		<p>
+			Welcome to the Administration dashboard for KTCS. On this dashboard, you can modify many aspects of this system, including but not limited to:
+		</p>
+		<ul>
+			<li>
+				<a href="{{ url_for('admin_cars') }}">Add, edit, and delete dars</a>
+			</li>
+			<li>
+				<a href="{{ url_for('admin_locations') }}">Add, edit, and delete locations</a>
+			</li>
+			<li>
+				<a href="{{ url_for('admin_reservations') }}">Add, edit, and delete reservations</a>
+			</li>
+			<li>
+				<a href="{{ url_for('admin_availability') }}">View availability by location</a>
+			</li>
+			<li>
+				<a href="{{ url_for('admin_maintenance') }}">Add and delete maintenance</a>
+			</li>
+			<li>
+				<a href="{{ url_for('admin_comments') }}">Reply to and delete comments</a>
+			</li>
+			<li>
+				<a href="{{ url_for('admin_queries') }}">Run queries</a>
+			</li>
+			<li>
+				<a href="{{ url_for('admin_generate_invoice') }}">Generate invoices</a>
+			</li>
+		</ul>
+	</div>
+</div>
+{% endblock %}

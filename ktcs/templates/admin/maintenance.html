@@ -1,0 +1,38 @@
+{% extends "admin/base.html" %}
+{% block title %}Maintenance{% endblock %}
+{% block admin_content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="row admin-buttons">
+			<div class="col-md-12">
+				<a class="btn btn-primary" href="{{ url_for('admin_maintenance_add') }}">Add Maintenance</a>
+			</div>
+		</div>
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Car</th>
+					<th>Date</th>
+					<th>Odometer</th>
+					<th>Type</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for maintenance in maintenances %}
+				<tr>
+					<td scope="row">{{ maintenance.id }}</td>
+					<td>{{ maintenance.car.year }} {{ maintenance.car.make }} {{ maintenance.car.model }}</td>
+					{% set maintenance_date = maintenance.date.strftime('%Y-%m-%d') %}
+					<td>{{ maintenance_date }}</td>
+					<td>{{ maintenance.odometer }}</td>
+					<td>{{ maintenance.mtype | replace('_', ' ') | replace('-', ' ')  | title }}</td>
+					<td><a class="btn btn-sm btn-primary" href="{{ url_for('admin_maintenance_edit', id=maintenance.id) }}">Edit</a> <a class="btn btn-sm btn-danger" href="{{ url_for('admin_maintenance_delete', id=maintenance.id) }}">Delete</a></td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

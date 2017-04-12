@@ -1,0 +1,140 @@
+{% extends "admin/base.html" %}
+{% block title %}Generate Invoice{% endblock %}
+{% block admin_content %}
+<div class="col-md-12">
+	<div class="row admin-buttons">
+		<form method="post" class="form-inline">
+			{{ form.csrf_token }}
+			<label class="mr-sm-2">Generate invoice for</label>
+			{{ form.user_id(class='custom-select mb-2 mr-sm-2 mb-sm-0') }}
+			<input type="submit" value="Go" class="btn btn-primary">
+		</form>
+	</div>
+</div>
+{% if submitted %}
+<div class="invoice col-md-10 offset-md-1">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="invoice-title">
+				<h2>Invoice</h2>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col-md-6">
+					<address>
+					<strong>Billed To:</strong><br>
+						{{ user.first_name }} {{ user.last_name }}<br>
+						{{ user.address }}<br>
+						{% if user.address2 %}{{ user.address2 }}<br>{% endif %}
+						{{ user.city }}, {{ user.province }} {{ user.postal_code }}
+					</address>
+				</div>
+				<div class="col-md-6 text-left">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<address>
+						<strong>Order Date:</strong><br>
+						{% set datenow = now.strftime('%Y-%m-%d') %}
+						{{ datenow }}<br>
+					</address>
+				</div>
+				<div class="col-md-6 text-left">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Order summary</h3>
+				</div>
+				<div class="panel-body">
+					<div class="table-responsive">
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									<td><strong>Item</strong></td>
+									<td><strong>Price</strong></td>
+									<td><strong>Quantity</strong></td>
+									<td class="text-left"><strong>Total</strong></td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Membership Fee</td>
+									<td>$50.00</td>
+									<td>1</td>
+									<td>$50.00</td>
+								</tr>
+								<tr><td style="visibility: hidden;" colspan="4"></td></tr>
+								{% set subtotal = [50] %}
+								{% for rental in rentals%}
+								<tr>
+									{% set pickup_date = rental.pickup.strftime('%Y-%m-%d') %}
+									<td colspan="4">
+										<strong>Rental #{{ rental.id }}: {{ rental.car.year }} {{ rental.car.make }} {{ rental.car.model }} ({{ pickup_date }})</strong>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<span class="text-muted">Base Rental</span>
+									</td>
+									<td>${{ '{0:0.2f}'.format(rental.car.rate) }}</td>
+									{% set total_kilometres = rental.dropoff_odometer - rental.pickup_odometer %}
+									<td>1</td>
+									{% set rental_price_base = rental.car.rate * 1 %}
+									<td>${{ '{0:0.2f}'.format(rental_price_base) }}</td>
+								</tr>
+								<tr>
+									<td>
+										<span class="text-muted">Kilometres &amp; Gas</span>
+									</td>
+									<td>$0.10</td>
+									{% set total_kilometres = rental.dropoff_odometer - rental.pickup_odometer %}
+									<td>{{ total_kilometres }}</td>
+									{% set rental_price_km = total_kilometres * 0.10 %}
+									<td>${{ '{0:0.2f}'.format(rental_price_km) }}</td>
+								</tr>
+								<tr>
+									<td class="thick-line"></td>
+									<td class="thick-line"></td>
+									<td class="thick-line text-right"><strong>Rental Total</strong></td>
+									{% set rental_total = rental_price_base + rental_price_km %}
+									{% if subtotal.append(subtotal.pop() + rental_total) %}{% endif %}
+									<td class="thick-line text-left">${{ '{0:0.2f}'.format(rental_total) }}</td>
+								</tr>
+								<tr><td style="visibility: hidden;" colspan="4"></td></tr>
+								{% endfor %}
+								<tr>
+									<td class="thick-line"></td>
+									<td class="thick-line"></td>
+									<td class="thick-line text-right"><strong>Subtotal</strong></td>
+									<td class="thick-line text-left">${{ '{0:0.2f}'.format(subtotal[0]) }}</td>
+								</tr>
+								<tr>
+									<td class="no-line"></td>
+									<td class="no-line"></td>
+									<td class="no-line text-right"><strong>Tax (15%)</strong></td>
+									{% set tax = subtotal[0] * 0.15 %}
+									<td class="no-line text-left">${{ '{0:0.2f}'.format(tax) }}</td>
+								</tr>
+								<tr>
+									<td class="no-line"></td>
+									<td class="no-line"></td>
+									<td class="no-line text-right"><strong>Total</strong></td>
+									{% set total = subtotal[0] + tax %}
+									<td class="no-line text-left">${{ '{0:0.2f}'.format(total) }}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+{% endblock %}

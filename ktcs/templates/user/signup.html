@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% from "_helpers.html" import render_field %}
+{% block title %}Sign up{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="jumbotron">
+			<div class="form-signup">
+				<h2 class="form-signup-header">Sign Up</h2>
+				<form method="post">
+					{{ form.csrf_token }}
+					<div class="card">
+						<div class="card-header" role="tab" id="headingOne">
+							<h5 class="mb-0">Login Information</h5>
+						</div>
+						<div class="card-block">
+							{{ render_field(form.email, class='form-control') }}
+							<div class="form-group row{% if form.password.errors %} has-danger{% endif %}">
+								{{ form.password.label(class='col-sm-2 col-form-label') }}
+								<div class="col-sm-10">
+									{{ form.password(class='form-control', placeholder=form.password.label.text)|safe }}
+									{{ form.password_repeat(class='form-control', placeholder=form.password_repeat.label.text)|safe }}
+									{% if form.password.errors %}<div class="form-control-feedback">{{ form.password.errors[0] }}</div>{% endif %}
+									{% if form.password.description %}<p id="{{ form.password.id }}_helptext" class="form-text text-muted">{{ form.password.description }}</p>{% endif %}
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header" role="tab" id="headingOne">
+							<h5 class="mb-0">Personal Details</h5>
+						</div>
+						<div class="card-block">
+							<div class="form-group row{% if form.first_name.errors %} has-danger{% endif %}">
+								<label for="{{ form.first_name.id }}" class="col-sm-2 col-form-label">Full Name</label>
+								<div class="col-sm-10">
+									<div class="form-inline form-inline-2">
+										{{ form.first_name(class='form-control', placeholder=form.first_name.label.text)|safe }}
+										{{ form.last_name(class='form-control', placeholder=form.last_name.label.text)|safe }}
+									</div>
+									{% if form.first_name.errors or form.last_name.errors %}<div class="form-control-feedback">{{ (form.first_name.errors + form.last_name.errors)[0] }}</div>{% endif %}
+									{% if form.first_name.description %}<p id="{{ form.first_name.id }}_helptext" class="form-text text-muted">{{ form.first_name.description }}</p>{% endif %}
+								</div>
+							</div>
+							{{ render_field(form.date_of_birth, class='form-control') }}
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header" role="tab" id="headingOne">
+							<h5 class="mb-0">Drivers License Information</h5>
+						</div>
+						<div class="card-block">
+							{{ render_field(form.license, class='form-control') }}
+							{{ render_field(form.license_province, class='form-control') }}
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header" role="tab" id="headingOne">
+							<h5 class="mb-0">Contact Information</h5>
+						</div>
+						<div class="card-block">
+							<div class="form-group row{% if form.address.errors %} has-danger{% endif %}">
+								<label for="address" class="col-sm-2 col-form-label">Address</label>
+								<div class="col-sm-10">
+									{{ form.address(class='form-control', placeholder=form.address.label.text)|safe }}
+									{{ form.address2(class='form-control', placeholder=form.address2.label.text)|safe }}
+									{% if form.address.errors or form.last_name.errors %}<div class="form-control-feedback">{{ (form.address.errors + form.last_name.errors)[0] }}</div>{% endif %}
+									{% if form.address.description %}<p id="{{ form.address.id }}_helptext" class="form-text text-muted">{{ form.address.description }}</p>{% endif %}
+								</div>
+							</div>
+							{{ render_field(form.city, class='form-control') }}
+							{{ render_field(form.province, class='form-control') }}
+							{{ render_field(form.postal_code, class='form-control') }}
+							{{ render_field(form.country, class='form-control') }}
+							{{ render_field(form.primary_phone, class='form-control') }}
+							{{ render_field(form.other_phone, class='form-control') }}
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-block">
+							<div class="form-group row">
+								<div class="offset-sm-2 col-sm-10">
+									<input type="submit" value="Sign up" class="btn btn-primary">
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<div class="jumbotron">
+			Already a member? <a href="{{ url_for('login') }}">Log in</a>.
+		</div>
+	</div>
+</div>
+{% endblock %}

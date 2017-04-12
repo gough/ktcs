@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% from "_helpers.html" import render_field %}
+{% block title %}Reservations by Car{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="jumbotron">
+			<div class="user-nav">
+        		<h2 class="form-settings-header">Reservations by Car</h2>
+			</div>
+			<div class="user-content">
+				<div class="row">
+					<div class="col-md-12">
+						<h4>Upcoming Rentals for {{ car.year }} {{ car.make }} {{ car.model }} (ID: {{ car.id }})</h4>
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Car</th>
+									<th>Location</th>
+									<th>Pickup</th>
+									<th>Dropoff</th>
+									<th>Management</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% if rentals | length == 0 %}
+								<tr>
+									<td scope="row" colspan="6" class="span-row">No results.</td>
+								</tr>
+								{% else %}
+								{% for rental in rentals %}
+								<tr>
+									<td scope="row">{{ rental.id }}</td>
+									<td>{{ rental.car.year }} {{ rental.car.make }} {{ rental.car.model }}</td>
+									<td>{{ rental.location.address }}, {{ rental.location.city }}, {{ rental.location.province }}</td>
+									{% set pickup_date = rental.pickup.strftime('%Y-%m-%d') %}
+									{% set pickup_time = rental.pickup.strftime('%H:%M:%S') %}
+									<td><a href="{{ url_for('admin_reservations_bydate', date=pickup_date) }}">{{ pickup_date }}</a> {{ pickup_time }}</td>
+									{% set dropoff_date = rental.dropoff.strftime('%Y-%m-%d') %}
+									{% set dropoff_time = rental.dropoff.strftime('%H:%M:%S') %}
+									<td><a href="{{ url_for('admin_reservations_bydate', date=dropoff_date) }}">{{ dropoff_date }}</a> {{ dropoff_time }}</td>
+									<td><a class="btn btn-sm btn-primary" href="{{ url_for('admin_reservations_edit', id=rental.id) }}">Edit</a> <a class="btn btn-sm btn-danger" href="{{ url_for('admin_reservations_delete', id=rental.id) }}">Delete</a></td>
+								</tr>
+								{% endfor %}
+								{% endif %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<h4>Past Rentals</h4>
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Car</th>
+									<th>Location</th>
+									<th>Pickup</th>
+									<th>Dropoff</th>
+									<th>Management</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% if past_rentals | length == 0 %}
+								<tr>
+									<td scope="row" colspan="6" class="span-row">No results.</td>
+								</tr>
+								{% else %}
+								{% for rental in past_rentals %}
+								<tr>
+									<td scope="row">{{ rental.id }}</td>
+									<td>{{ rental.car.year }} {{ rental.car.make }} {{ rental.car.model }}</td>
+									<td>{{ rental.location.address }}, {{ rental.location.city }}, {{ rental.location.province }}</td>
+									{% set pickup_date = rental.pickup.strftime('%Y-%m-%d') %}
+									{% set pickup_time = rental.pickup.strftime('%H:%M:%S') %}
+									<td><a href="{{ url_for('admin_reservations_bydate', date=pickup_date) }}">{{ pickup_date }}</a> {{ pickup_time }}</td>
+									{% set dropoff_date = rental.dropoff.strftime('%Y-%m-%d') %}
+									{% set dropoff_time = rental.dropoff.strftime('%H:%M:%S') %}
+									<td><a href="{{ url_for('admin_reservations_bydate', date=dropoff_date) }}">{{ dropoff_date }}</a> {{ dropoff_time }}</td>
+									<td><a class="btn btn-sm btn-primary" href="{{ url_for('admin_reservations_edit', id=rental.id) }}">Edit</a> <a class="btn btn-sm btn-danger" href="{{ url_for('admin_reservations_delete', id=rental.id) }}">Delete</a></td>
+								</tr>
+								{% endfor %}
+								{% endif %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<a class="btn btn-primary" href="{{ url_for('admin_reservations') }}">All Reservations</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

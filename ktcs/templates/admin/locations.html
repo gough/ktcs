@@ -1,0 +1,39 @@
+{% extends "admin/base.html" %}
+{% block title %}Locations{% endblock %}
+{% block admin_content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="row admin-buttons">
+			<div class="col-md-12">
+				<a class="btn btn-primary" href="{{ url_for('admin_locations_add') }}">Add Location</a>
+			</div>
+		</div>
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Address</th>
+					<th>City</th>
+					<th>Province</th>
+					<th>Postal Code</th>
+					<th>Spaces</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for location in locations %}
+				<tr>
+					<td scope="row">{{ location.id }}</td>
+					<td>{{ location.address }}</td>
+					<td>{{ location.city }}</td>
+					<td>{{ provinces(location.province) }}</td>
+					<td>{{ location.postal_code[0:3] + ' ' + location.postal_code[3:] }}</td>
+					<td>{{ location.spaces }}</td>
+					<td><a class="btn btn-sm btn-primary" href="{{ url_for('admin_locations_edit', id=location.id) }}">Edit</a> <a class="btn btn-sm btn-danger" href="{{ url_for('admin_locations_delete', id=location.id) }}">Delete</a></td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-8">
+		<div class="jumbotron">
+			<h1>Welcome</h1>
+	        <p>
+	        	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ex leo, viverra vitae laoreet condimentum, consectetur in ligula. Donec congue purus leo. Etiam molestie, orci nec elementum vehicula, purus dolor tristique dolor, nec blandit velit mi vel purus. Pellentesque in diam massa. Etiam in aliquet ipsum. Praesent at elementum lacus. Morbi pharetra nunc quis odio dapibus tempor. Sed at urna nec nunc rhoncus congue. Duis egestas nisi nec lectus mattis, eleifend hendrerit lectus tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae
+	        </p>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="jumbotron">
+			<h2>Reserve</h2>
+			<p>
+				Already have an idea of when and where you want one of our vehicles? Quickly reserve one now by clicking the button below!
+			</p>
+			<div class="form-group">
+				<div class="form-inline">
+					<a class="btn btn-primary" href="{{ url_for('reservations_new') }}">Reserve Now</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

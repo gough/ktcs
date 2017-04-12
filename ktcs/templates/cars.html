@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Reservations{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="jumbotron">
+			<div class="user-nav">
+	        	<h2 class="form-settings-header">Cars</h2>
+			</div>
+			<div class="user-content">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr>
+									<th>Car</th>
+									<th>Location</th>
+									<th>Daily Rate</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% if cars | length == 0 %}
+								<tr>
+									<td scope="row" colspan="5" class="span-row">No results.</td>
+								</tr>
+								{% else %}
+								{% for car in cars %}
+								<tr>
+									<td>{{ car.year }} {{ car.make }} {{ car.model }}</td>
+									<td>{{ car.location.address }}, {{ car.location.city }}, {{ car.location.province }}</td>
+									<td>${{ car.rate }}</td>
+								</tr>
+								{% endfor %}
+								{% endif %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

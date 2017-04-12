@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<link rel="icon" href="favicon.ico">
+
+		<title>{% block title %}{% endblock %} - KTCS</title>
+
+		<!-- Bootstrap core CSS -->
+		<link href="{{ url_for('static', filename='css/lib/bootstrap.min.css') }}" rel="stylesheet">
+		<link href="{{ url_for('static', filename='css/lib/font-awesome.min.css') }}" rel="stylesheet">
+
+		<!-- Custom styles for this template -->
+		<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+			<div class="container">
+			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<a class="navbar-brand" href="{{ url_for('home') }}">KTCS</a>
+			<div class="collapse navbar-collapse" id="navbarText">
+				<ul class="navbar-nav mr-auto">
+					{% for page in ['home', 'cars', 'locations', 'reservations', 'comments'] %}
+					<li class="nav-item">
+						<a class="nav-link {%- if request.path == url_for(page) %} active{% endif %}" href="{{ url_for(page) }}">{{ page | title }}</a>
+					</li>
+					{% endfor %}
+				</ul>
+				<ul class="navbar-nav">
+				{% if current_user.is_authenticated %}
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							{{ current_user.first_name }} {{ current_user.last_name }}
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<h6 class="dropdown-header">User</h6>
+							{% for page in ['profile', 'rental_history', 'logout'] %}
+							<a class="dropdown-item" href="{{ url_for(page) }}">{{ page | replace('_', ' ') | title }}</a>
+							{% endfor %}
+							{% if current_user.roles %}
+							<div class="dropdown-divider"></div>
+							<h6 class="dropdown-header">Admin</h6>
+							{% for page in ['admin'] %}
+							<a class="dropdown-item" href="{{ url_for(page) }}">{% if page == 'admin' %}Dashboard{% else %}{{ page | replace('_', ' ') | title }}{% endif %}</a>
+							{% endfor %}
+							{% endif %}
+						</div>
+					</li>
+				{% else %}
+					{% for page, text in [('signup', 'Sign Up'), ('login', 'Log In')] %}
+					<li class="nav-item">
+						<a class="nav-link {%- if request.path == url_for(page) %} active{% endif %}" href="{{ url_for(page) }}">{{ text | title | replace('_', ' ') }}</a>
+					</li>
+					{% endfor %}
+				{% endif %}
+				</ul>
+			</div>
+			</div>
+		</nav>
+		<div class="container">
+			{% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+			<div class="row">
+				<div class="col-md-12">
+				{% for category, message in messages %}
+					<div class="alert alert-{% if category == 'error' %}danger{% else %}{{ category }}{% endif %}" role="alert">
+						{% if category == 'error' %}
+						<strong>Error!</strong> {{ message|safe }}
+						{% else %}
+						{{ message|safe }}
+						{% endif %}
+					</div>
+
+				{% endfor %}
+				</div>
+			</div>
+			{% endif %}
+			{% endwith %}
+			{% block content %}{% endblock %}
+		</div>
+
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+		<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+		<script src="{{ url_for('static', filename='js/lib/bootstrap.min.js') }}"></script>
+	</body>
+</html>

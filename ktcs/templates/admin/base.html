@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="jumbotron">
+			<div class="admin-nav">
+	        	<h2 class="form-settings-header">Administration</h2>
+				<ul class="nav nav-tabs">
+					{% for page in ['admin', 'admin_cars', 'admin_locations', 'admin_reservations', 'admin_availability', 'admin_maintenance', 'admin_comments', 'admin_queries', 'admin_generate_invoice'] %}
+					<li class="nav-item">
+						<a class="nav-link{%- if request.path == url_for(page) %} active{% endif %}" href="{{ url_for(page) }}">{% if page == 'admin' %}Dashboard{% else %}{{ page | replace('admin', '') | replace('_', ' ') | title }}{% endif %}</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="admin-content">
+			{% block admin_content %}{% endblock %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

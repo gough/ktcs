@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Comments{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="jumbotron">
+			<div class="user-nav">
+	        	<h2 class="form-settings-header">Comments</h2>
+			</div>
+			<div class="user-content">
+				<div class="row user-buttons">
+					<div class="col-md-12">
+						<a class="btn btn-primary" href="{{ url_for('comments_new') }}">New Comment</a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<h4>My Comments</h4>
+						<table class="table table-bordered">
+							<tbody>
+								{% if comments | length == 0 %}
+								<tr>
+									<td scope="row" colspan="5" class="span-row">No results.</td>
+								</tr>
+								{% else %}
+								{% for comment in comments %}
+								{% if comment.parent_id == None %}
+								<tr style="margin-top: 20px">
+									<td scope="row"><strong>ID:</strong></td>
+									<td>{{ comment.id }}</td>
+									<td><strong>Car:</strong></td>
+									<td>{{ comment.rental.car.year }} {{ comment.rental.car.make }} {{ comment.rental.car.model }}</td>
+									<td><strong>Rating:</strong></td>
+									<td>{{ comment.rating }}</td>
+								</tr>
+								<tr>
+									<td scope="row"><strong>Title:</strong></td>
+									<td colspan="5">{{ comment.title }}</strong></td>
+								</tr>
+								<tr>
+									<td scope="row"><strong>Comment:</strong></td>
+									<td colspan="5">{{ comment.text | truncate(350) }}</td>
+								</tr>
+								<tr>
+									<td scope="row" colspan="6">
+										<a class="btn btn-sm btn-danger" href="{{ url_for('comments_delete', id=comment.id) }}">Delete</a>
+									</td>
+								</tr>
+								<tr><td style="visibility: hidden" colspan="6"></td></tr>
+								{% endif %}
+								{% endfor %}
+								{% endif %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<h4>Responses</h4>
+						<table class="table table-bordered">
+							<tbody>
+								{% if responses | length == 0 %}
+								<tr>
+									<td scope="row" colspan="5" class="span-row">No results.</td>
+								</tr>
+								{% else %}
+								{% for response in responses %}
+								<tr style="margin-top: 20px">
+									<td width="200px" scope="row"><strong>In Response To:</strong></td>
+									<td>{{ response.parent_id }}</td>
+								</tr>
+								<tr>
+									<td scope="row"><strong>Response:</strong></td>
+									<td>{{ response.text | truncate(350) }}</td>
+								</tr>
+								<tr><td style="visibility: hidden" colspan="3"></td></tr>
+								{% endfor %}
+								{% endif %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

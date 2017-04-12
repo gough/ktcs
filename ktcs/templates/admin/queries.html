@@ -1,0 +1,52 @@
+{% extends "admin/base.html" %}
+{% block title %}Queries{% endblock %}
+{% block admin_content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="row admin-buttons">
+			<div class="col-md-12">
+				<form method="post" class="form-inline">
+					{{ form.csrf_token }}
+					<label class="mr-sm-2">Display car(s) with</label>
+					{{ form.queries(class='custom-select mb-2 mr-sm-2 mb-sm-0') }}
+					<input type="submit" value="Go" class="btn btn-primary">
+				</form>
+			</div>
+		</div>
+		{% if query %}
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Car</th>
+					<th>VIN</th>
+					{% if query == '5000' %}<th>Kilometres</th>{% endif %}
+					{% if query == 'highest'%}<th>Rentals</th>{% endif %}
+					{% if query == 'lowest'%}<th>Rentals</th>{% endif %}
+					{% if query == 'damaged' %}<th>Status</th>{% endif %}
+				</tr>
+			</thead>
+			<tbody>
+				{% if cars | length == 0 %}
+				<tr>
+					<td scope="row" colspan="5" class="span-row">No results.</td>
+				</tr>
+				{% else %}
+				{% for car in cars %}
+				<tr>
+					<td scope="row">{{ car[0].car.id }}</td>
+					<td>{{ car[0].car.year }} {{ car[0].car.make }} {{ car[0].car.model }}</td>
+					<td>{{ car[0].car.vin }}</td>
+					{% if query == '5000' %}<td>{{ car.kilometres }}</td>{% endif %}
+					{% if query == 'highest' %}<td>{{ car.rentals }}</td>{% endif %}
+					{% if query == 'lowest' %}<td>{{ car.rentals }}</td>{% endif %}
+					{% if query == 'damaged' %}<td>{{ car[0].dropoff_status | replace('_', ' ') | replace('-', ' ') | title }}</td>{% endif %}
+				</tr>
+				{% endfor %}
+				{% endif %}
+			</tbody>
+		</table>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}
